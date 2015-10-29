@@ -13,7 +13,7 @@ module.exports = class StaticPhantomRenderer
 
 		@paths = @config.staticPhantomRenderer.paths
 		@host = @config.staticPhantomRenderer.host
-		@public = @config.paths.public
+		@public = @config.staticPhantomRenderer.outputPath or @config.paths.public
 		@loadPaths = []
 
 	onCompile: (data, path, callback) ->
