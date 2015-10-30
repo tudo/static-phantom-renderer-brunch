@@ -7,6 +7,7 @@ page = require('webpage').create()
 address = system.args[1]
 dir = system.args[2]
 filename = system.args[3]
+removeScripts = system.args[4] is "true"
 
 if system.args.length < 3
 	console.log 'Usage: render.js <url> <dir> <filename>'
@@ -24,6 +25,18 @@ page.open address, (status) ->
 		phantom.exit()
 	else
 		page.viewportSize = { width: 320, height: 480 }
+
+		if removeScripts
+			noOfScriptsRemoved = page.evaluate ->
+				noOfScripts = 0
+				script = document.getElementsByTagName('script')[0]
+				while script
+					if script?.parentNode?.removeChild?
+						script.parentNode.removeChild script
+						noOfScripts++
+					script = document.getElementsByTagName('script')[0]
+				noOfScripts
+
 		document = page.evaluate () ->
 			return document.getElementsByTagName('html')[0].outerHTML
 
@@ -47,7 +60,7 @@ page.open address, (status) ->
 
 		html = pre + document + post
 
-		console.log 'writing', path.join(dir, filename) 
+		console.log 'writing', path.join(dir, filename) + (if removeScripts then " | removed #{noOfScriptsRemoved} scripts" else "")
 		fs.write path.join(dir, filename), html, 'w'
 
 		phantom.exit()
