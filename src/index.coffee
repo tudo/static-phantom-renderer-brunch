@@ -15,6 +15,7 @@ module.exports = class StaticPhantomRenderer
 		@host = @config.staticPhantomRenderer.host
 		@public = @config.staticPhantomRenderer.outputPath or @config.paths.public
 		@removeScripts = @config.staticPhantomRenderer.removeScripts
+		@timeout = @config.staticPhantomRenderer.timeout
 		@loadPaths = []
 
 	onCompile: (data, path, callback) ->
@@ -67,7 +68,7 @@ module.exports = class StaticPhantomRenderer
 		_.each @loadPaths, (path) =>
 			# calling the renderer for each path
 			filename = sysPath.join path, 'index.html'
-			proc = exec "phantomjs node_modules/static-phantom-renderer-brunch/lib/renderer.js #{@host}##{path} #{@public} #{filename} #{@removeScripts}", (error, stdout, stderr) ->
+			proc = exec "phantomjs node_modules/static-phantom-renderer-brunch/lib/renderer.js #{@host}#{path} #{@public} #{filename} #{@removeScripts} #{@timeout}", (error, stdout, stderr) ->
 				console.log '[static-renderer]: ' + stdout if stdout
 				console.error '[static-renderer]: ' + stderr if stderr
 				console.error error if error
