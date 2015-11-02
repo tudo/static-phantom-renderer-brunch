@@ -12,12 +12,14 @@ brew install phantomjs
 
 ## Config
 ```coffeescript
-	staticPhantomRenderer:
-		paths: ['', 'projects', 'projects/[0..3]', 'team'] # required: list of paths to render
-		host: 'http://localhost:8080' # optional, host used to render
-		outputPath: 'public/static' # optional, path used to place the rendered pages (default is the Brunch public path)
-		removeScripts: yes # optional, remove scripts from DOM before writing the files
-		timeout: 2500 # optional, delay page rendering after a timeout
+	plugins:
+		staticPhantomRenderer:
+			enabled: yes # required to enable the plugin
+			paths: ['', 'projects', 'projects/[0..3]', 'team'] # required: list of paths to render
+			host: 'http://localhost:8080' # optional, host used to render
+			outputPath: 'public/static' # optional, path used to place the rendered pages (default is the Brunch public path)
+			removeScripts: yes # optional, remove scripts from DOM before writing the files
+			timeout: 2500 # optional, delay page rendering after a timeout
 ```
 Paths should be a list of strings, each representing a page to be rendered. You can indicate id ranges with [a..b].
 If host is omitted, it will start a node http-server serving the public folder. But you can use this option to start a server by yourself before building the project. 
