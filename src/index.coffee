@@ -11,11 +11,11 @@ module.exports = class StaticPhantomRenderer
 
 		return unless @enabled
 
-		@paths = @config.staticPhantomRenderer.paths
-		@host = @config.staticPhantomRenderer.host
-		@public = @config.staticPhantomRenderer.outputPath or @config.paths.public
-		@removeScripts = @config.staticPhantomRenderer.removeScripts
-		@timeout = @config.staticPhantomRenderer.timeout
+		@paths = @config.plugins.staticPhantomRenderer.paths
+		@host = @config.plugins.staticPhantomRenderer.host
+		@public = @config.plugins.staticPhantomRenderer.outputPath or @config.paths.public
+		@removeScripts = @config.plugins.staticPhantomRenderer.removeScripts
+		@timeout = @config.plugins.staticPhantomRenderer.timeout
 		@loadPaths = []
 
 	onCompile: (data, path, callback) ->
